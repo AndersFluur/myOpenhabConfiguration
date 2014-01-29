@@ -1,0 +1,28 @@
+Group All
+Group gGroundFloor 		(All)
+
+Group GF_Living 	"Living Room" 	<video> 	(gGroundFloor)
+
+/* active groups */
+Group:Switch:OR(ON, OFF) 		Lights 		"All Lights [(%d)]" 								(All)
+Group:Switch:OR(ON, OFF) 		Heating 	"No. of Active Heatings [(%d)]" 	<heating> 		(All)
+Group:Number:AVG 				Temperature	"Avg. Room Temperature [%.1f °C]" 	<temperature>	(Status)
+Group:Contact:OR(OPEN, CLOSED) 	Windows 	"Open windows [(%d)]"				<contact>		(All)
+
+/* Lights */
+Dimmer Light_GF_Living_Table 		"Table" 		(GF_Living, Lights)
+Switch Light_GF_Corridor_Ceiling 	"Ceiling" 		(GF_Living, Lights)
+Switch td_device_1                     "Plug"   (GF_Living, Lights) {exec=">[ON:/root/on] >[OFF:/root/off]"}
+
+/* Heating */
+Switch Heating_GF_Living 	"Livingroom" 	<heating>	(GF_Living, Heating)
+
+/* Indoor Climate */
+Number td_sensor_mandolyn_11_1 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Living)
+Number td_sensor_mandolyn_11_2  "Humidity [%.1f %%]" <waterdrop>   (GF_Living)
+
+/* Windows */
+Contact Window_GF_Living 		"Terrace door [MAP(en.map):%s]"		(GF_Living, Windows)
+
+/* NTP binding demo item */
+DateTime		Date			"Date [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Berlin:de_DE" }

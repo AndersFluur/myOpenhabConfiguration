@@ -1,12 +1,12 @@
 sitemap demo label="Main Menu"
 {
 	Frame {
-		Group item=gGroundFloor label="Ground Floor" icon="groundfloor"
+		Group item=gGarage label="Garaget" icon="groundfloor"
 	}
 	Frame label="Date" {
 		Text item=Date
 	}
-    Text label="Group Demo" icon="1stfloor" {
+    Text label="Group Demo"  icon="1stfloor" {
             Switch item=Lights mappings=[OFF="All Off"]
             Group item=Heating
             Group item=Windows

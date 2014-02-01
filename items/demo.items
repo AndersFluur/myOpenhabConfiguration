@@ -9,7 +9,7 @@ Group:Number:AVG 				Temperatur	"Avg. Room Temperature [%.1f °C]" 	<temperature
 Group:Contact:OR(OPEN, CLOSED) 	Fonster 	"Öppna Fönster [(%d)]"				<contact>		(Alla)
 
 /* Lampor */
-Switch td_device_1               ""   (gG_Allrum, Lampor) {exec=">[ON:/root/on] >[OFF:/root/off]"}
+Switch td_device_1               "Läslampa"   (gG_Allrum, Lampor) {exec=">[ON:/root/on] >[OFF:/root/off]"}
 
 /* Klimat */
 Number td_sensor_mandolyn_11_1 	"Temperatur [%.1f °C]"	<temperature>	(Temperatur, gG_Allrum)

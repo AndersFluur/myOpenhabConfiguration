@@ -1,28 +1,22 @@
-Group All
-Group gGroundFloor 		(All)
+Group Alla
+Group gGarage 		(Alla)
 
-Group GF_Living 	"Living Room" 	<video> 	(gGroundFloor)
+Group gG_Allrum 	"Allrum" 	<video> 	(gGarage)
 
 /* active groups */
-Group:Switch:OR(ON, OFF) 		Lights 		"All Lights [(%d)]" 								(All)
-Group:Switch:OR(ON, OFF) 		Heating 	"No. of Active Heatings [(%d)]" 	<heating> 		(All)
-Group:Number:AVG 				Temperature	"Avg. Room Temperature [%.1f °C]" 	<temperature>	(Status)
-Group:Contact:OR(OPEN, CLOSED) 	Windows 	"Open windows [(%d)]"				<contact>		(All)
+Group:Switch:OR(ON, OFF) 		Lampor 		"Alla Lampor [(%d)]" 								(Alla)
+Group:Number:AVG 				Temperatur	"Avg. Room Temperature [%.1f °C]" 	<temperature>	(Status)
+Group:Contact:OR(OPEN, CLOSED) 	Fonster 	"Öppna Fönster [(%d)]"				<contact>		(Alla)
 
-/* Lights */
-Dimmer Light_GF_Living_Table 		"Table" 		(GF_Living, Lights)
-Switch Light_GF_Corridor_Ceiling 	"Ceiling" 		(GF_Living, Lights)
-Switch td_device_1                     "Plug"   (GF_Living, Lights) {exec=">[ON:/root/on] >[OFF:/root/off]"}
+/* Lampor */
+Switch td_device_1               ""   (gG_Allrum, Lampor) {exec=">[ON:/root/on] >[OFF:/root/off]"}
 
-/* Heating */
-Switch Heating_GF_Living 	"Livingroom" 	<heating>	(GF_Living, Heating)
+/* Klimat */
+Number td_sensor_mandolyn_11_1 	"Temperatur [%.1f °C]"	<temperature>	(Temperatur, gG_Allrum)
+Number td_sensor_mandolyn_11_2  "Humidity [%.1f %%]" <waterdrop>   (gG_Allrum)
 
-/* Indoor Climate */
-Number td_sensor_mandolyn_11_1 	"Temperature [%.1f °C]"	<temperature>	(Temperature, GF_Living)
-Number td_sensor_mandolyn_11_2  "Humidity [%.1f %%]" <waterdrop>   (GF_Living)
-
-/* Windows */
-Contact Window_GF_Living 		"Terrace door [MAP(en.map):%s]"		(GF_Living, Windows)
+/* Fönster */
+Contact Window_gG_Allrum 		"Ötest [MAP(en.map):%s]"		(gG_Allrum, Fonster)
 
 /* NTP binding demo item */
-DateTime		Date			"Date [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Berlin:de_DE" }
+DateTime		Date			"Date [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Stockholm:se_SE" }

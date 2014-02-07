@@ -11,5 +11,5 @@ Strategies {
 
 Items {
 	// Store all sensor values from Tellstick
-	td_sensor_* : strategy = everyMinute
+	td_sensor_mandolyn_11_1, td_sensor_mandolyn_11_2 : strategy = everyMinute
 }

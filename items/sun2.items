@@ -1,0 +1,12 @@
+String SunRise		"Sunrise [%s]"	<settings> { http="<[openweathermap:300000:XSLT(openweathermap_sunrise.xsl)]" }
+String SunRiseTime 	"Sunrise Time [%s]"	<sun> 			(groupWeatherData)
+
+
+Group Wheather
+Group WeatherData		(Weather)
+Number WeatherTemperature  	"Current [%.1f °F]" <temperature>  (WeatherData)  { http="<[openwheathermap:60000:XSLT(openweathermap.xsl)]" }
+
+//Number WeatherTempMax 	"High [%.1f °F]"		<temperature> 	(WeatherData) { http="<[http://api.openweathermap.org/data/2.5/weather?q=North%20Olmsted&mode=xml:60000:XSLT(openweathermap.xsl)]" }
+//Number WeatherTempMin 			"Low [%.1f °F]"			<temperature> 	(WeatherData) { http="<[http://api.openweathermap.org/data/2.5/weather?q=North%20Olmsted&mode=xml:60000:XSLT(openweathermap.xsl)]" }
+//String WeatherWindDirection 		"Wind Direction [%s]"	<wind> 			(WeatherData) { http="<[http://api.openweathermap.org/data/2.5/weather?q=North%20Olmsted&mode=xml:60000:XSLT(openweathermap_wind_direction.xsl)]" }
+

@@ -20,9 +20,10 @@ sitemap demo label="Main Menu"
 
 	Frame {
    	   Text label="Experimental"  icon="settings" {
-  	     	 Text item=SunRise
+  	     Text item=SunRise
    		 Text item=SunRiseTime
-		 Group item=Wheather label="Ute" icon="cloud"
+   		 Text item=SunSet
+   		 Text item=SunSetTime
 		 Text item=WeatherTemperature
 		 Text item=WeatherTempMax
 		 Text item=WeatherTempMin
@@ -30,5 +31,9 @@ sitemap demo label="Main Menu"
 		 Text item=WeatherWindSpeed
    	   }
 	}
+	Frame {
+			 Group item=Wheather label="Ute Klimat" icon="cloud"
+	}
+	
 
 } //Sitemap

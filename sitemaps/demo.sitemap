@@ -32,7 +32,7 @@ sitemap demo label="Main Menu"
    	   }
 	}
 	Frame {
-			 Group item=Wheather label="Ute Klimat" icon="cloud"
+			 Group item=gWeather label="Ute Klimat" icon="cloud"
 	}
 	
 

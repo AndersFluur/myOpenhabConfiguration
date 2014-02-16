@@ -3,6 +3,17 @@ sitemap demo label="Main Menu"
 	Frame {
 		Group item=gGarage label="Garaget" icon="groundfloor"
 	}
+	Frame label="Inomhus klimat" {
+		Text item=td_sensor_mandolyn_11_1 {
+			Frame {
+				Text item=td_sensor_11_1_max
+				Text item=td_sensor_11_1_min
+			}
+			Frame {
+				Chart item=td_sensor_mandolyn_11_1 period=h refresh=10000
+			}
+		}
+	}
 	Frame label="Date" {
 		Text item=Date
 	}

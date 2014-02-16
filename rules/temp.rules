@@ -1,0 +1,9 @@
+rule "Update max and min temperatures"
+when
+	Item td_sensor_mandolyn_11_1 changed or
+	Time cron "0 0 0 * * ?" or
+	System started
+then	
+	postUpdate(td_sensor_11_1_max, td_sensor_mandolyn_11_1.maximumSince(now.toDateMidnight).state)
+	postUpdate(td_sensor_11_1_min, td_sensor_mandolyn_11_1.minimumSince(now.toDateMidnight).state)
+end

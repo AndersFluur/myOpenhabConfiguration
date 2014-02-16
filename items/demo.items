@@ -6,13 +6,15 @@ Group gG_Allrum 	"Allrum" 	<video> 	(gGarage)
 /* active groups */
 Group:Switch:OR(ON, OFF) 		Lampor 		"Alla Lampor [(%d)]" 								(Alla)
 Group:Number:AVG 				Temperatur	"Avg. Room Temperature [%.1f °C]" 	<temperature>	(Status)
-Group:Contact:OR(OPEN, CLOSED) 	Fonster 	"Öppna Fönster [(%d)]"				<contact>		(Alla)
 
 /* Lampor */
 Switch td_device_1               "Läslampa"   (gG_Allrum, Lampor) {exec=">[ON:/root/on] >[OFF:/root/off]"}
 
 /* Klimat */
-Number td_sensor_mandolyn_11_1 	"Temperatur [%.1f °C]"	<temperature>	(Temperatur, gG_Allrum)
+Number td_sensor_mandolyn_11_1 		"Temperatur [%.1f °C]"		<temperature>	(Temperatur, gG_Allrum)
+Number td_sensor_11_1_max 	"Temperatur max [%.1f °C]"	<temperature>	(Temperatur, gG_Allrum)
+Number td_sensor_11_1_min 	"Temperatur min [%.1f °C]"	<temperature>	(Temperatur, gG_Allrum)
+
 Number td_sensor_mandolyn_11_2  "Humidity [%.1f %%]" <waterdrop>   (gG_Allrum)
 
 /* Fönster */

@@ -1,0 +1,17 @@
+Group     Sun
+ 
+// query the sunrise/sunset times from retained MQTT topics
+//      home/weather/today/sunsetTime-hhmm 17:17
+//      home/weather/today/sunriseTime-hhmm 08:04
+ 
+String SunRiseTime
+        "Sunrise [%s]"
+        <sun>
+        (Sun)
+        { mqtt="<[hippo:home/weather/today/sunriseTime-hhmm:state:REGEX((.*))]" }
+ 
+String SunSetTime
+        "Sunset [%s]"
+        <moon>
+        (Sun)
+        { mqtt="<[hippo:home/weather/today/sunsetTime-hhmm:state:REGEX((.*))]" }

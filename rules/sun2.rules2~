@@ -1,0 +1,56 @@
+import org.openhab.core.library.types.*
+import org.openhab.core.persistence.*
+import org.openhab.model.script.actions.*
+import org.joda.time.*
+import org.joda.time.format.*
+import java.lang.String
+
+rule "Derive Local Sunrise Time and Timer Setup"
+when
+//    Item SunRise received update
+        Time cron "0 * * * * ?"   // Every day 13:15 hours, evaluate sunset
+
+then
+    logInfo("Base Rules", "*** *** *** SunRise Updated *** *** ***::" + SunRise.state)
+	 
+    sunrise = new DateTime(SunRise.state.toString(), DateTimeZone::UTC)
+	 
+    var DateTimeZone localDTZ = DateTimeZone::getDefault()
+	
+	sunrise = sunrise.withZone(localDTZ)
+	logDebug("Base Rules", "*** *** *** Sunrise For Today *** *** ***::" + sunrise)
+
+	SunRiseTime.postUpdate(String::format("%02d", sunrise.getHourOfDay) + String::format("%02d",sunrise.getMinuteOfHour))
+	logDebug("Base Rules", "*** *** *** SunRiseTime Updated *** *** ***::" + SunRiseTime.state)
+
+	//SCHEDULE SUNRISE TIMER IF IT ISN'T ALREADY PAST SUNRISE TODAY
+	if (sunrise.beforeNow)
+	{
+		logDebug("Base Rules", "*** *** *** SunRiseTimer Already Past Sunrise for Today")	
+		
+		if (sunRiseTime != null && ! sunRiseTime.running) 
+		{
+			sunRiseTimer.cancel()
+			logDebug("Base Rules", "*** *** *** SunRiseTimer Cancelled")
+			sunRiseTimer = null
+			logDebug("Base Rules", "*** *** *** SunRiseTimer set to null")		
+		}
+	}
+	else
+	{
+		if (sunRiseTimer == null)
+		{
+			sunRiseTimer = createTimer(sunrise) [|
+			logDebug("Base Rules", "*** *** *** SunRiseTimer Executing *** *** *** ")		
+			sendMail(JohnEmail.state.toString, "Sunrise", "Just thought you might want to know the sun is coming up.",)
+		
+			]
+
+			logDebug("Base Rules", "*** *** *** SunRiseTimer Set For: "  + sunrise.toString())		
+		}
+		else
+		{
+			logDebug("Base Rules", "*** *** *** SunRiseTimer STILL Set For: *** *** *** " + sunrise.toString())		
+		}
+	}
+end

@@ -13,7 +13,7 @@ when
 then
     logInfo("Base Rules", "*** *** *** SunRise Updated *** *** ***::" + SunRise.state)
 	 
-    var DateTime sunrise = new DateTime(SunRise.state.toString(), DateTimeZone::UTC)
+    sunrise = new DateTime(SunRise.state.toString(), DateTimeZone::UTC)
 	 
     var DateTimeZone localDTZ = DateTimeZone::getDefault()
 	
@@ -28,11 +28,11 @@ then
 	{
 		logDebug("Base Rules", "*** *** *** SunRiseTimer Already Past Sunrise for Today")	
 		
-		if (SunRiseTime != null && ! SunRiseTime.running) 
+		if (sunRiseTime != null && ! sunRiseTime.running) 
 		{
-			sunRiseTime.cancel()
-			logDebug("Base Rules", "*** *** *** SunRiseTime Cancelled")
-			sunRiseTime = null
+			sunRiseTimer.cancel()
+			logDebug("Base Rules", "*** *** *** SunRiseTimer Cancelled")
+			sunRiseTimer = null
 			logDebug("Base Rules", "*** *** *** SunRiseTimer set to null")		
 		}
 	}

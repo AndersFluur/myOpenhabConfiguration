@@ -2,28 +2,34 @@ import org.openhab.core.library.types.*
 import org.openhab.core.persistence.*
 import org.openhab.model.script.actions.*
 import org.joda.time.*
-import org.eclipse.xtext.util.*
+import org.joda.time.format.*
+import java.lang.String
+
+var Timer sunRiseTimer 
+var DateTime sunrise
+var DateTimeZone localDTZ
 
 rule "Derive Local Sunrise Time and Timer Setup"
 when
+        Time cron "0/15/30/45 * * * * ?"   // Every day 13:15 hours, evaluate sunset
 //    Item SunRise received update
-      Time cron "* *  * * * ?"
 then
-	logInfo("Base Rules", "*** *** *** SunRise Updated *** *** ***::" + SunRise.state)
+    sunrise = new DateTime(SunRise.state.toString(), DateTimeZone::UTC)
+//   logInfo("Base Rules", "*** *** *** SunRise Updated *** *** ***1::" + SunRise.state)
+//   logInfo("Base Rules", "*** *** *** SunRise Updated *** *** ***12::" + SunRise.state)
 	 
-//	sunrise = new DateTime(SunRise.state.toString, DateTimeZone::UTC)
+//    logDebug("Base Rules", "*** *** *** SunRiseTime Updated *** *** ***2::" + sunrise.toString)
 	 
-	logInfo("Base Rules", "*** HERE WE ARE 1::" )
-    var DateTimeZone localDTZ = DateTimeZone::getDefault()
+    localDTZ = DateTimeZone::getDefault()
+//    logDebug("Base Rules", "*** *** *** SunRiseTime Updated *** *** ***3::" + localDTZ.toString)
 	
-	logInfo("Base Rules", "*** HERE WE ARE 2::" )
-	sunrise = sunrise.withZone(localDTZ)
-	logDebug("Base Rules", "*** *** *** Sunrise For Today *** *** ***::" + sunrise)
+    sunrise = sunrise.withZone(localDTZ)
+    logDebug("Base Rules", "*** *** *** Sunrise For Today *** *** ***4::")
 
-	SunRiseTime.postUpdate(String::format("%02d", sunrise.getHourOfDay) + String::format("%02d",sunrise.getMinuteOfHour))
-	logDebug("Base Rules", "*** *** *** SunRiseTime Updated *** *** ***::" + SunRiseTime.state)
+    SunRiseTime.postUpdate(String::format("%02d", sunrise.getHourOfDay) + String::format("%02d",sunrise.getMinuteOfHour))
+    logDebug("Base Rules", "*** *** *** SunRiseTime Updated *** *** ***::" + SunRiseTime.state)
 
-	//SCHEDULE SUNRISE TIMER IF IT ISN'T ALREADY PAST SUNRISE TODAY
+    //SCHEDULE SUNRISE TIMER IF IT ISN'T ALREADY PAST SUNRISE TODAY
 	if (sunrise.beforeNow)
 	{
 		logDebug("Base Rules", "*** *** *** SunRiseTimer Already Past Sunrise for Today")	
@@ -40,9 +46,9 @@ then
 	{
 		if (sunRiseTimer == null)
 		{
-			sunRiseTimer = createTimer(sunrise) [|
+			sunRiseTimer = createTimer(sunrise)
 			logDebug("Base Rules", "*** *** *** SunRiseTimer Executing *** *** *** ")		
-			sendMail(JohnEmail.state.toString, "Sunrise", "Just thought you might want to know the sun is coming up.",)
+			sendMail("anders@fluur.net", "Sunrise", "Just thought you might want to know the sun is coming up.",)
 		
 			]
 

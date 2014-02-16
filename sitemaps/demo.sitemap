@@ -23,7 +23,10 @@ sitemap demo label="Main Menu"
   	     	 Text item=SunRise
    		 Text item=SunRiseTime
 		 Group item=Wheather label="Ute" icon="cloud"
-		 Text item=WeatherTemperature 
+		 Text item=WeatherTemperature
+		 Text item=WeatherTempMax
+		 Text item=WeatherTempMin
+		 Text item=WeatherWindDirection 
    	   }
 	}
 

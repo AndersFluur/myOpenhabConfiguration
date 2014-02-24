@@ -1,6 +1,9 @@
 sitemap demo label="Main Menu"
 {
 	Frame {
+		Group item=Alla label="Alla" icon="groundfloor"
+	}
+	Frame {
 		Group item=gGarage label="Garaget" icon="groundfloor"
 	}
 	Frame label="Inomhus klimat" {
@@ -12,6 +15,9 @@ sitemap demo label="Main Menu"
 			Frame {
 				Chart item=td_sensor_mandolyn_11_1 period=h refresh=10000
 			}
+			Frame {
+				Chart item=td_sensor_mandolyn_11_2 period=h refresh=10000
+			}
 		}
 	}
 	Frame label="Date" {
@@ -19,20 +25,16 @@ sitemap demo label="Main Menu"
 	}
 
 	Frame {
-   	   Text label="Experimental"  icon="settings" {
-  	     Text item=SunRise
+   	   Text label="Debug"  icon="settings" {
    		 Text item=SunRiseTime
-   		 Text item=SunSet
    		 Text item=SunSetTime
-		 Text item=WeatherTemperature
-		 Text item=WeatherTempMax
-		 Text item=WeatherTempMin
-		 Text item=WeatherWindDirection 
-		 Text item=WeatherWindSpeed
    	   }
 	}
 	Frame {
 			 Group item=gWeather label="Ute Klimat" icon="cloud"
+	}
+	Frame {
+			 Group item=gHouse label="Huset" icon="house"
 	}
 	
 

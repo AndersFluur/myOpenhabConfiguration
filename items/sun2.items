@@ -1,5 +1,5 @@
 Group gWeather
-Group gWeatherData		(gWeather)
+Group gWeatherData	"Väder"	<climate> (gWeather)
 
 String SunRise		"Sunrise [%s]"	<settings> { http="<[openweathermap:300000:XSLT(openweathermap_sunrise.xsl)]" }
 String SunRiseTime 	"Sunrise Time [%s]"	<sun> 			(gWeatherData)
@@ -10,8 +10,8 @@ String SunSetTime 	"Sunset Time [%s]"	<sun> 			(gWeatherData)
 Number WeatherTemperature   "Current [%.1f °C]"  <temperature>  (gWeatherData)  { http="<[openweathermap:60000:XSLT(openweathermap_temp.xsl)]" }
 
 Number WeatherTempMax 	    "High [%.1f °C]"     <temperature>  (gWeatherData) { http="<[openweathermap:60000:XSLT(openweathermap_temp_max.xsl)]" }
-Number WeatherTempMin 	    "Low [%.1f °C]"	 <temperature> 	(gWeatherData) { http="<[openweathermap:60000:XSLT(openweathermap_temp_min.xsl)]" }
+Number WeatherTempMin 	    "Low [%.1f °C]"	     <temperature> 	(gWeatherData) { http="<[openweathermap:60000:XSLT(openweathermap_temp_min.xsl)]" }
 
-Number WeatherWindSpeed 	 "Speed [%.1f m/s]"	 <wind> 	(gWeatherData) { http="<[openweathermap:60000:XSLT(openweathermap_wind_speed.xsl)]" }
+Number WeatherWindSpeed 	 "Speed [%.1f m/s]"	  <wind> 	(gWeatherData) { http="<[openweathermap:60000:XSLT(openweathermap_wind_speed.xsl)]" }
 String WeatherWindDirection "Wind Direction [%s]" <wind> 	(gWeatherData) { http="<[openweathermap:60000:XSLT(openweathermap_wind_direction.xsl)]" }
 

@@ -3,12 +3,13 @@ Group gGarage 		(Alla)
 
 Group gG_Allrum 	"Allrum" 	<video> 	(gGarage)
 
+
 /* active groups */
 Group:Switch:OR(ON, OFF) 		Lampor 		"Alla Lampor [(%d)]" 								(Alla)
 Group:Number:AVG 				Temperatur	"Avg. Room Temperature [%.1f °C]" 	<temperature>	(Status)
 
 /* Lampor */
-Switch td_device_1               "Läslampa"   (gG_Allrum, Lampor) {exec=">[ON:/root/on] >[OFF:/root/off]"}
+Switch td_device_1               "Läslampa"   (gG_Allrum, Lampor) {exec=">[ON:/usr/bin/tdtool --on 1] >[OFF:/usr/bin/tdtool --off 1]"}
 
 /* Klimat */
 Number td_sensor_mandolyn_11_1 		"Temperatur [%.1f °C]"		<temperature>	(Temperatur, gG_Allrum)
@@ -22,3 +23,15 @@ Contact Window_gG_Allrum 		"Ötest [MAP(en.map):%s]"		(gG_Allrum, Fonster)
 
 /* NTP binding demo item */
 DateTime		Date			"Date [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Stockholm:se_SE" }
+
+
+Group gHouse  "Husets prylar"  <house>    (Alla) 
+Switch td_device_2               "Ringklocka"      (gHouse) {exec=">[ON:/usr/bin/tdtool --on 2] >[OFF:/usr/bin/tdtool --off 2]"}
+Switch td_device_21              "Lampa baksida"   (gHouse) {exec=">[ON:/usr/bin/tdtool --on 21] >[OFF:/usr/bin/tdtool --off 21]"}
+Switch td_device_22              "Lampor framsida" (gHouse) {exec=">[ON:/usr/bin/tdtool --on 22] >[OFF:/usr/bin/tdtool --off 22]"}
+DateTime EndOfNight			"Lampor släcktid"       (gHouse)
+DateTime StartOfNight       "Lampor tändtid"		(gHouse)
+/* Tryckkontakter */
+Switch td_device_41  { autoupdate="false"}
+Switch td_device_42  { autoupdate="false"}
+Switch td_device_43  { autoupdate="false"}

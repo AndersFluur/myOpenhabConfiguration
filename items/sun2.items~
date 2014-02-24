@@ -1,2 +1,0 @@
-String SunRise			"Sunrise [%s]"							<settings>								{ http="<[openweathermap:300000:XSLT(openweathermap_sunrise.xsl)]" }
-String SunRiseTime 	"Sunrise Time [%s]"						<sun> 			(groupWeatherData)

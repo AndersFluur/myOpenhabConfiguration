@@ -65,3 +65,20 @@ then
       ]
 end
 
+
+rule "Controller 43"
+
+when
+ 	Item td_device_43 changed  
+then
+	if (td_device_43.state == ON) 
+	{
+		sendCommand(td_device_21,ON)
+	}
+	else
+	{
+		sendCommand(td_device_21,OFF)
+	}
+	
+end
+

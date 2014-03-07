@@ -35,6 +35,7 @@ sitemap demo label="Main Menu"
 	}
 	Frame {
 			 Group item=gHouse label="Huset" icon="house"
+			 Selection item=EndOfNight 
 	}
 	
 

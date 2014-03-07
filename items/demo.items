@@ -2,6 +2,7 @@ Group Alla
 Group gGarage 		(Alla)
 
 Group gG_Allrum 	"Allrum" 	<video> 	(gGarage)
+Group gSunSwitches "These are all controlled by Sunset/rise" <sun>
 
 
 /* active groups */
@@ -27,11 +28,12 @@ DateTime		Date			"Date [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Stoc
 
 Group gHouse  "Husets prylar"  <house>    (Alla) 
 Switch td_device_2               "Ringklocka"      (gHouse) {exec=">[ON:/usr/bin/tdtool --on 2] >[OFF:/usr/bin/tdtool --off 2]"}
-Switch td_device_21              "Lampa baksida"   (gHouse) {exec=">[ON:/usr/bin/tdtool --on 21] >[OFF:/usr/bin/tdtool --off 21]"}
-Switch td_device_22              "Lampor framsida" (gHouse) {exec=">[ON:/usr/bin/tdtool --on 22] >[OFF:/usr/bin/tdtool --off 22]"}
+Switch td_device_21              "Lampa baksida"   (gHouse,gSunSwitches) {exec=">[ON:/usr/bin/tdtool --on 21] >[OFF:/usr/bin/tdtool --off 21]"}
+Switch td_device_22              "Lampor framsida" (gHouse,gSunSwitches) {exec=">[ON:/usr/bin/tdtool --on 22] >[OFF:/usr/bin/tdtool --off 22]"}
 DateTime EndOfNight			"Lampor släcktid"       (gHouse)
 DateTime StartOfNight       "Lampor tändtid"		(gHouse)
+
 /* Tryckkontakter */
-Switch td_device_41  { autoupdate="false"}
-Switch td_device_42  { autoupdate="false"}
-Switch td_device_43  { autoupdate="false"}
+Switch td_device_41  (gHouse) { autoupdate="false"} 
+Switch td_device_42  (gHouse) { autoupdate="false"}
+Switch td_device_43  (gHouse) { autoupdate="false"}

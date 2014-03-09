@@ -25,7 +25,7 @@ then
     sunrise = sunrise.withZone(localDTZ)
     logDebug("Base Rules", "*** *** *** Sunrise For Today *** *** ***4::")
 
-    SunRiseTime.postUpdate(String::format("%02d", sunrise.getHourOfDay) + String::format("%02d",sunrise.getMinuteOfHour))
+    SunRiseTime.postUpdate(String::format("%02d:", sunrise.getHourOfDay) + String::format("%02d:00",sunrise.getMinuteOfHour))
     logDebug("Base Rules", "*** *** *** SunRiseTime Updated *** *** ***::" + SunRiseTime.state)
 
     //SCHEDULE SUNRISE TIMER IF IT ISN'T ALREADY PAST SUNRISE TODAY
@@ -73,7 +73,7 @@ then
     sunset = sunset.withZone(localDTZ)
     logDebug("Base Rules", "*** *** *** Sunset For Today *** *** ***4::")
 
-    SunSetTime.postUpdate(String::format("%02d", sunset.getHourOfDay) + String::format("%02d",sunset.getMinuteOfHour))
+    SunSetTime.postUpdate(String::format("%02d:", sunset.getHourOfDay) + String::format("%02d:00",sunset.getMinuteOfHour))
     logDebug("Base Rules", "*** *** *** SunSetTime Updated *** *** ***::" + SunSetTime.state)
 
     //SCHEDULE SUNRISE TIMER IF IT ISN'T ALREADY PAST SUNRISE TODAY

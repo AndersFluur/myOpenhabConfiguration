@@ -12,14 +12,15 @@ var Timer tOutdoorLightsSunrise
 rule "React to sunset"
 
 when 
-        Time cron "0 15 15 * * ?"   // Every day 15:15h, evaluate sunset
+ //       Time cron "0 15 15 * * ?"   // Every day 15:15h, evaluate sunset
+       Time cron "* * * * * ?"   // Every minute
 then
     var year   = now.getYear
     var month  = now.getMonthOfYear
     var day    = now.getDayOfMonth
-    var datum  = year+"-"+month+"-"+day+" "+SunSetTime.state
-    logInfo("Sunset","datum = " + datum)
-    var DateTime sunset = parse(year+"-"+month+"-"+day+"T"+SunSetTime.state)
+    var sunsetString  = year+"-"+month+"-"+day+"T"+SunSetTime.state
+    logInfo("Sunset","sunsetString = " + sunsetString)
+    var DateTime sunset = parse(sunsetString)
     
     // Indoor Lights
      
@@ -40,20 +41,21 @@ end
 rule "React to sunrise"
 
 when 
-        Time cron "0 15 15 * * ?"   // Every day 15:15h, evaluate sunrise
+//        Time cron "0 15 15 * * ?"   // Every day 15:15h, evaluate sunrise
+       Time cron "* * * * * ?"   // Every minute
 then
     var year   = now.getYear
     var month  = now.getMonthOfYear
     var day    = now.getDayOfMonth
-    var datum  = year+"-"+month+"-"+day+" "+SunRiseTime.state
-    logInfo("Sunrise","datum = " + datum)
-    var DateTime sunrise = parse(year+"-"+month+"-"+day+"T"+SunRiseTime.state)
+    var sunriseString  = year+"-"+month+"-"+day+"T"+SunRiseTime.state
+    var DateTime sunrise = parse(sunriseString)
+    logInfo("Sunrise","sunriseString = " + sunriseString)
     
     // Outdoor Lights
      
      // Cancel timer to avoid reschedule
     if(tOutdoorLightsSunrise!=null) {
-        logInfo("Sunrise","Timer var Timer tOutdoorLightsSunrise cancelled") 
+        logInfo("Sunrise","Timer tOutdoorLightsSunrise cancelled") 
         tOutdoorLightsSunrise.cancel()
     }
     logInfo("Sunrise","Timer  tOutdoorLightsSunrise created") 

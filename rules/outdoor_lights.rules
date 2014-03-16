@@ -12,7 +12,8 @@ var Timer tOutdoorLightsSunrise
 rule "React to sunset"
 
 when 
-       Time cron "0 50 7 * * ?"   // Every day 15:15h, evaluate sunset
+       Time cron "0 23 9 * * ?"   or // Every day 15:15h, evaluate sunset
+       System started
 //       Time cron "0 0/2 * * * ?"   // Every minute
 then
     var year   = now.getYear
@@ -20,7 +21,9 @@ then
     var day    = now.getDayOfMonth
     var sunsetString  = year+"-"+month+"-"+day+"T"+SunSetTime.state+"Z"
     var DateTime sunset = parse(sunsetString)
-    logInfo("Sunset","sunset = " + sunset.toString)
+    var DateTime sunsetTimer = sunset.minusMinutes(60)
+    SunRiseTime.postUpdate(sunsetTimer.toString)
+   logInfo("Sunset","sunset = " + sunset.toString+ "sunset timer =" + sunsetTimer.toString)
     
     // Indoor Lights
      
@@ -29,20 +32,21 @@ then
         logInfo("Sunset","Timer tOutdoorLightsSunset cancelled") 
         tOutdoorLightsSunset.cancel()
     }
-    tOutdoorLightsSunset = createTimer(sunset.minusMinutes(60)) [|
+    tOutdoorLightsSunset = createTimer(sunsetTimer) [|
         logInfo("Sunset","Timer tOutdoorLightsSunset executed") 
         gSunSwitches?.members.forEach(Switch|
                 sendCommand(Switch, ON)
         )
       ]
-    logInfo("Sunset","Timer tOutdoorLightsSunset created and set to "+ sunset.minusMinutes(60).toString)
+    logInfo("Sunset","Timer tOutdoorLightsSunset created and set to "+ sunsetTimer.toString)
 
 end
 
 rule "React to sunrise"
 
 when 
-        Time cron "0 50 7 * * ?"   // Every day 15:15h, evaluate sunrise
+        Time cron "0 23 9 * * ?"  or// Every day 15:15h, evaluate sunrise
+       System started
 //       Time cron "0 0/2 * * * ?"   // Every minute
 then
     var year   = now.getYear
@@ -50,7 +54,8 @@ then
     var day    = now.getDayOfMonth
     var sunriseString  = year+"-"+month+"-"+day+"T"+SunRiseTime.state+"Z"
     var DateTime sunrise = parse(sunriseString)
-    logInfo("Sunrise","sunriseString = " + sunriseString)
+    var DateTime sunriseTimer = sunrise.plusMinutes(60) 
+    logInfo("Sunrise","sunriseString = " + sunrise.toString + "SunriseTimer =" + sunriseTimer.toString)
     
     // Outdoor Lights
      
@@ -59,13 +64,13 @@ then
         logInfo("Sunrise","Timer tOutdoorLightsSunrise cancelled") 
         tOutdoorLightsSunrise.cancel()
     }
-    tOutdoorLightsSunrise = createTimer(sunrise.plusMinutes(60)) [|
+    tOutdoorLightsSunrise = createTimer(sunriseTimer) [|
         logInfo("Sunrise","Timer tOutdoorLightsSunrise executed") 
         gSunSwitches?.members.forEach(Switch|
                 sendCommand(Switch, OFF)
         )
       ]
-    logInfo("Sunrise","Timer  tOutdoorLightsSunrise created at " + sunrise.plusMinutes(60).toString)
+    logInfo("Sunrise","Timer  tOutdoorLightsSunrise created at " + sunriseTimer.toString)
 end
 
 

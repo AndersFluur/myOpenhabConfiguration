@@ -5,13 +5,11 @@ import org.joda.time.*
 import org.joda.time.format.*
 import java.lang.String
 
-var Timer sunRiseTimer 
 var DateTime sunrise
-var Timer sunSetTimer 
 var DateTime sunset
 var DateTimeZone localDTZ
 
-rule "Derive Local Sunrise Time and Timer Setup"
+rule "Derive Local Sunrise Time"
 when
 //        Time cron "0/15/30/45 * * * * ?"   // Every day 13:15 hours, evaluate sunset
     Item SunRise received update
@@ -27,39 +25,9 @@ then
 
     SunRiseTime.postUpdate(String::format("%02d:", sunrise.getHourOfDay) + String::format("%02d:00",sunrise.getMinuteOfHour))
     logDebug("Base Rules", "*** *** *** SunRiseTime Updated *** *** ***::" + SunRiseTime.state)
-
-    //SCHEDULE SUNRISE TIMER IF IT ISN'T ALREADY PAST SUNRISE TODAY
-	if (sunrise.beforeNow)
-	{
-		logDebug("Base Rules", "*** *** *** SunRiseTimer Already Past Sunrise for Today")	
-		
-		if (sunRiseTimer != null && ! sunRiseTimer.running) 
-		{
-			sunRiseTimer.cancel()
-			logDebug("Base Rules", "*** *** *** SunRiseTimer Cancelled")
-			sunRiseTimer = null
-			logDebug("Base Rules", "*** *** *** SunRiseTimer set to null")		
-		}
-	}
-	else
-	{// Sunrise is after now
-		if (sunRiseTimer == null)
-		{
-			sunRiseTimer = createTimer(sunrise) [|
-			logDebug("Base Rules", "*** *** *** SunRiseTimer Executing *** *** *** ")		
-			sendMail("anders@fluur.net", "Sunrise", "Just thought you might want to know the sun is coming up.")		
-			]
-
-			logDebug("Base Rules", "*** *** *** SunRiseTimer Set For: "  + sunrise.toString())		
-		}
-		else
-		{
-			logDebug("Base Rules", "*** *** *** SunRiseTimer STILL Set For: *** *** *** " + sunrise.toString())		
-		}
-	}
 end
 
-rule "Derive Local Sunset Time and Timer Setup"
+rule "Derive Local Sunset Time"
 when
 //        Time cron "0/15/30/45 * * * * ?"   // Every day 13:15 hours, evaluate sunset
     Item SunSet received update
@@ -76,33 +44,5 @@ then
     SunSetTime.postUpdate(String::format("%02d:", sunset.getHourOfDay) + String::format("%02d:00",sunset.getMinuteOfHour))
     logDebug("Base Rules", "*** *** *** SunSetTime Updated *** *** ***::" + SunSetTime.state)
 
-    //SCHEDULE SUNRISE TIMER IF IT ISN'T ALREADY PAST SUNRISE TODAY
-	if (sunset.beforeNow)
-	{
-		logDebug("Base Rules", "*** *** *** SunSetTimer Already Past Sunset for Today")	
-		
-		if (sunSetTimer != null && ! sunSetTimer.running) 
-		{
-			sunSetTimer.cancel()
-			logDebug("Base Rules", "*** *** *** SunSetTimer Cancelled")
-			sunSetTimer = null
-			logDebug("Base Rules", "*** *** *** SunSetTimer set to null")		
-		}
-	}
-	else
-	{
-		if (sunSetTimer == null)
-		{
-			sunSetTimer = createTimer(sunset) [|
-			logDebug("Base Rules", "*** *** *** SunSetTimer Executing *** *** *** ")		
-			sendMail("anders@fluur.net", "Sunset", "Just thought you might want to know the sun is coming up.")		
-			]
-
-			logDebug("Base Rules", "*** *** *** SunSetTimer Set For: "  + sunset.toString())		
-		}
-		else
-		{
-			logDebug("Base Rules", "*** *** *** SunSetTimer STILL Set For: *** *** *** " + sunset.toString())		
-		}
-	}
+ 
 end

@@ -8,11 +8,42 @@ import org.joda.time.format.*
 var Timer tOutdoorLightsSunset
 var Timer tOutdoorLightsSunrise
 
+rule "React to sunrise"
+
+when 
+        Time cron "0 84 9 * * ?"  or// Every day 15:15h, evaluate sunrise
+       System started
+//       Time cron "0 0/2 * * * ?"   // Every minute
+then
+    var year   = now.getYear
+    var month  = now.getMonthOfYear
+    var day    = now.getDayOfMonth
+    var sunriseString  = year+"-"+month+"-"+day+"T"+SunRiseTime.state+"Z"
+    var DateTime sunrise = parse(sunriseString)
+    var DateTime sunriseTimer = sunrise.plusMinutes(60) 
+    SunRiseTimer.postUpdate(sunriseTimer.toString)
+    logInfo("Sunrise","sunrise = " + sunrise.toString + " SunriseTimer =" + sunriseTimer.toString)
+    
+    // Outdoor Lights
+     
+     // Cancel timer to avoid reschedule
+    if(tOutdoorLightsSunrise!=null) {
+        logInfo("Sunrise","Timer tOutdoorLightsSunrise cancelled") 
+        tOutdoorLightsSunrise.cancel()
+    }
+    tOutdoorLightsSunrise = createTimer(sunriseTimer) [|
+        logInfo("Sunrise","Timer tOutdoorLightsSunrise executed") 
+        gSunSwitches?.members.forEach(Switch|
+                sendCommand(Switch, OFF)
+        )
+      ]
+    logInfo("Sunrise","Timer  tOutdoorLightsSunrise created at " + sunriseTimer.toString)
+end
 
 rule "React to sunset"
 
 when 
-       Time cron "0 25 9 * * ?"   or // Every day 15:15h, evaluate sunset
+       Time cron "0 54 9 * * ?"   or // Every day 15:15h, evaluate sunset
        System started
 //       Time cron "0 0/2 * * * ?"   // Every minute
 then
@@ -22,8 +53,8 @@ then
     var sunsetString  = year+"-"+month+"-"+day+"T"+SunSetTime.state+"Z"
     var DateTime sunset = parse(sunsetString)
     var DateTime sunsetTimer = sunset.minusMinutes(60)
-    SunRiseTime.postUpdate(sunsetTimer.toString)
-   logInfo("Sunset","sunset = " + sunset.toString+ "sunset timer =" + sunsetTimer.toString)
+    SunSetTimer.postUpdate(sunsetTimer.toString)
+   logInfo("Sunset","sunset = " + sunset.toString+ " sunset timer =" + sunsetTimer.toString)
     
     // Indoor Lights
      
@@ -42,36 +73,7 @@ then
 
 end
 
-rule "React to sunrise"
 
-when 
-        Time cron "0 25 9 * * ?"  or// Every day 15:15h, evaluate sunrise
-       System started
-//       Time cron "0 0/2 * * * ?"   // Every minute
-then
-    var year   = now.getYear
-    var month  = now.getMonthOfYear
-    var day    = now.getDayOfMonth
-    var sunriseString  = year+"-"+month+"-"+day+"T"+SunRiseTime.state+"Z"
-    var DateTime sunrise = parse(sunriseString)
-    var DateTime sunriseTimer = sunrise.plusMinutes(60) 
-    logInfo("Sunrise","sunriseString = " + sunrise.toString + "SunriseTimer =" + sunriseTimer.toString)
-    
-    // Outdoor Lights
-     
-     // Cancel timer to avoid reschedule
-    if(tOutdoorLightsSunrise!=null) {
-        logInfo("Sunrise","Timer tOutdoorLightsSunrise cancelled") 
-        tOutdoorLightsSunrise.cancel()
-    }
-    tOutdoorLightsSunrise = createTimer(sunriseTimer) [|
-        logInfo("Sunrise","Timer tOutdoorLightsSunrise executed") 
-        gSunSwitches?.members.forEach(Switch|
-                sendCommand(Switch, OFF)
-        )
-      ]
-    logInfo("Sunrise","Timer  tOutdoorLightsSunrise created at " + sunriseTimer.toString)
-end
 
 
 rule "Controller 43"

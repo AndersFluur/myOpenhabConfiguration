@@ -1,10 +1,10 @@
 Group gWeather
 Group gWeatherData	"Väder"	<climate> (gWeather)
 
-String SunRise		"Sunrise [%s]"	<settings> { http="<[openweathermap:300000:XSLT(openweathermap_sunrise.xsl)]" }
+String SunRise		"Sunrise [%s]"	<settings> (gWeatherData) { http="<[openweathermap:300000:XSLT(openweathermap_sunrise.xsl)]" }
 String SunRiseTime 	"Sunrise Time [%s]"	<sun> 			(gWeatherData)
 String SunRiseTimer 	"Sunrise Timer [%s]"	<sun> 			(gWeatherData)
-String SunSet		"Sunset [%s]"	<settings> { http="<[openweathermap:300000:XSLT(openweathermap_sunset.xsl)]" }
+String SunSet		"Sunset [%s]"	<settings> (gWeatherData) { http="<[openweathermap:300000:XSLT(openweathermap_sunset.xsl)]" }
 String SunSetTime 	"Sunset Time [%s]"	<sun> 			(gWeatherData)
 String SunSetTimer 	"Sunset Timer [%s]"	<sun> 			(gWeatherData)
 

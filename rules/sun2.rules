@@ -5,8 +5,6 @@ import org.joda.time.*
 import org.joda.time.format.*
 import java.lang.String
 
-var DateTime sunrise
-var DateTime sunset
 var DateTimeZone localDTZ
 
 rule "Derive Local Sunrise Time"
@@ -14,6 +12,7 @@ when
 //        Time cron "0/15/30/45 * * * * ?"   // Every day 13:15 hours, evaluate sunset
     Item SunRise received update
 then
+    var DateTime sunrise
     sunrise = new DateTime(SunRise.state.toString(), DateTimeZone::UTC)
 //   logInfo("Base Rules", "*** *** *** SunRise Updated *** *** ***1::" + SunRise.state)
 	 
@@ -32,6 +31,7 @@ when
 //        Time cron "0/15/30/45 * * * * ?"   // Every day 13:15 hours, evaluate sunset
     Item SunSet received update
 then
+	var DateTime sunset
     sunset = new DateTime(SunSet.state.toString(), DateTimeZone::UTC)
 //   logInfo("Base Rules", "*** *** *** SunSet Updated *** *** ***1::" + SunSet.state)
 	 

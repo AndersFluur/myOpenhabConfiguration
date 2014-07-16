@@ -11,7 +11,7 @@ var Timer tOutdoorLightsSunrise
 rule "React to sunrise"
 
 when 
-        Time cron "0 84 9 * * ?"  or// Every day 15:15h, evaluate sunrise
+        Time cron "0 8 10 * * ?"  or// Every day 15:15h, evaluate sunrise
        System started
 //       Time cron "0 0/2 * * * ?"   // Every minute
 then
@@ -54,7 +54,7 @@ then
     var DateTime sunset = parse(sunsetString)
     var DateTime sunsetTimer = sunset.minusMinutes(60)
     SunSetTimer.postUpdate(sunsetTimer.toString)
-   logInfo("Sunset","sunset = " + sunset.toString+ " sunset timer =" + sunsetTimer.toString)
+    logInfo("Sunset","sunset = " + sunset.toString+ " sunset timer =" + sunsetTimer.toString)
     
     // Indoor Lights
      

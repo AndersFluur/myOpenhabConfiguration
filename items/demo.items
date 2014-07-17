@@ -26,12 +26,18 @@ Switch td_device_42  (gHouse) { autoupdate="false"}
 Switch td_device_43  (gHouse) { autoupdate="false"}
 
 /* Lampor */
-Switch td_device_1               "Läslampa"   (gG_Allrum, Lampor) {exec=">[ON:/usr/bin/tdtool --on 1] >[OFF:/usr/bin/tdtool --off 1]"}
+Switch td_device_1               "Läslampa"   (gG_Allrum, Lampor) {tellstick="Kontakt:Command"}
+Group:Switch:OR(ON, OFF) 		Lampor 		"Alla Lampor [(%d)]" 								(Alla)
+Switch td_device_2               "Ringklocka"      (gHouse) {tellstick="Ringklocka 1:Command"}
+Switch td_device_21              "Lampa baksida"   (gHouse,gSunSwitches) {tellstick="Utebrytare 1:Command"}
+Switch td_device_22              "Lampor framsida" (gHouse,gSunSwitches) {tellstick="Utebrytare 2:Command"}
+
+/* Switch td_device_1               "Läslampa"   (gG_Allrum, Lampor) {exec=">[ON:/usr/bin/tdtool --on 1] >[OFF:/usr/bin/tdtool --off 1]"}
 Group:Switch:OR(ON, OFF) 		Lampor 		"Alla Lampor [(%d)]" 								(Alla)
 Switch td_device_2               "Ringklocka"      (gHouse) {exec=">[ON:/usr/bin/tdtool --on 2] >[OFF:/usr/bin/tdtool --off 2]"}
 Switch td_device_21              "Lampa baksida"   (gHouse,gSunSwitches) {exec=">[ON:/usr/bin/tdtool --on 21] >[OFF:/usr/bin/tdtool --off 21]"}
 Switch td_device_22              "Lampor framsida" (gHouse,gSunSwitches) {exec=">[ON:/usr/bin/tdtool --on 22] >[OFF:/usr/bin/tdtool --off 22]"}
-
+*/
 
 /* NTP binding demo item */
 DateTime		Date			"Date [%1$tA, %1$td.%1$tm.%1$tY]"	<calendar>	{ ntp="Europe/Stockholm:se_SE" }
